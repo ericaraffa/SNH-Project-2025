@@ -1,3 +1,1 @@
-# SNH-WebApp
-
-un sito fatto, rifatto, strafatto
+# SNH-Project-2025
