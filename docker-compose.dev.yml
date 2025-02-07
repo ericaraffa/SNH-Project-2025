@@ -1,0 +1,31 @@
+version: "3"
+
+services:
+  backend:
+    build: .
+    ports:
+      - "3000:8080"
+    privileged: false
+    environment:
+      - DEV=1
+      - GMAIL_EMAIL=${GMAIL_EMAIL}
+      - SENDGRID_API_KEY=${SENDGRID_API_KEY}
+      - DEPLOYED_DOMAIN=${DEPLOYED_DOMAIN}
+    volumes:
+      - ./backend:/var/www/html/public
+      - ./ebooks:/var/www/html/ebooks
+
+  # frontend:
+    # build: frontend
+    # ports:
+      # - "8080:80"
+
+  db:
+    build: db
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=snh
+    ports:
+      - 3306:3306
+    privileged: false
+   
