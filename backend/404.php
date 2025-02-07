@@ -2,6 +2,7 @@
 require_once './lib/utils.php';
 $user = getLoggedUser();
 
+// TODO Change description
 $description = "just b00k page not found";
 $title = "Page not found!";
 require_once "template/header.php"; ?>
