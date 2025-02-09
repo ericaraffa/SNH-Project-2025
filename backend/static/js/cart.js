@@ -1,3 +1,4 @@
+// TODO We don't need this
 
 const cart_size = document.getElementById("cart_size");
 const cart_total = document.getElementById("cart_total");

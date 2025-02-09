@@ -1,31 +1,33 @@
 <?php
 require_once './lib/utils.php';
+require_once './lib/DB.php';
+
 $user = getLoggedUser();
 
 if ($user != null) {
     redirect_authenticated();
 }
 
+// To ask for the account recovery
 function ask_recover_account()
 {
     // If we are here, we are sure of having the email set
     $email = $_POST['email'];
 
-    // check types
+    // Check types
     if (!is_string($email)) {
         return [
             "error" => "Invalid email",
         ];
     }
 
-    require_once './lib/DB.php';
-
-    // check if email exists
+    // Check if email exists
     $db = DB::getInstance();
     $ans = $db->exec('SELECT * FROM `user` WHERE `email` = :email', [
         'email' => $email
     ]);
 
+    // If the email doesn't exists, return an error and log it
     if (count($ans) === 0) {
         security_log("Attempt of recovering password for non existing user ({$email})");
         return [
@@ -51,11 +53,12 @@ function ask_recover_account()
         ];
     }
 
-    // create token
+    // create random token for password recovery
     $token = bin2hex(random_bytes(32));
     $DEPLOYED_DOMAIN = getenv('DEPLOYED_DOMAIN');
 
-    // send code via email
+    // TODO Change email service
+    // Send code via email
     $ans = send_mail(
         $email,
         'Recover account',
@@ -69,20 +72,25 @@ function ask_recover_account()
         ];
     }
 
+    // Insert into the database the recovery request of the user
     $ans = $db->exec('INSERT INTO `user_recover` (`user_id`, `token`, `valid_until`) VALUES (:user_id, :token, DATE_ADD(NOW(), INTERVAL 24 HOUR))', [
         'user_id' => $user['id'],
         'token' => password_hash($token, PASSWORD_DEFAULT),
     ]);
 
+    // And log the request
     security_log("User {$user['id']} requested password recovery");
 
+    // Return result of the request
     return [
         "msg" => "Check your email for the password recovery link",
     ];
 }
 
+// To actually recover the account through the recovery link
 function recover_account()
 {
+    // Check parameters
     if (!isset($_POST['token']) || !isset($_POST['user_id']) || !isset($_POST['password']) || !isset($_POST['confirm_password'])) {
         return [
             "error" => "Invalid token or password"
@@ -94,13 +102,14 @@ function recover_account()
     $confirm_password = $_POST['confirm_password'];
     $user_id = $_POST['user_id'];
 
-    // check types
+    // Check types
     if (!is_string($token) || !is_numeric($user_id) || !is_string($new_password) || !is_string($confirm_password)) {
         return [
             "error" => "Invalid token or password"
         ];
     }
 
+    // Sanitize password
     if (!checkPassword($new_password)) {
         return [
             "error" => "Password doesn't meet requirements: at least 8 characters, 1 uppercase, 1 lowercase, 1 number, 1 symbol"
@@ -113,14 +122,13 @@ function recover_account()
         ];
     }
 
-    require_once './lib/DB.php';
-
-    // check if token actually exists
+    // Check if token actually exists
     $db = DB::getInstance();
     $ans = $db->exec('SELECT * FROM `user_recover` WHERE `user_id` = :user_id', [
         'user_id' => $user_id
     ]);
 
+    // If it doesn't exists, there is no pending request for this user
     if (count($ans) === 0) {
         security_log("Attempt of recovering password for user with no pending requests ({$user_id})");
         return [
@@ -130,6 +138,7 @@ function recover_account()
 
     $user_recover = $ans[0];
 
+    // Verify the token
     if(!password_verify($token, $user_recover['token'])) {
         security_log("Attempt of recovering password with invalid token ({$user_id})");
         return [
@@ -137,11 +146,12 @@ function recover_account()
         ];
     }
 
-    // delete token from requests
+    // Delete pending request of the user
     $db->exec('DELETE FROM `user_recover` WHERE `id` = :id', [
         'id' => $user_recover['id']
     ]);
 
+    // If the token is expired, return an error and log it
     if (strtotime($user_recover['valid_until']) < time()) {
         security_log("Attempt of recovering password with expired token ({$user_id})");
         return [
@@ -149,11 +159,12 @@ function recover_account()
         ];
     }
 
+    // Check if the user that is trying to recover the password actually exists
     $ans = $db->exec('SELECT email FROM `user` WHERE `id` = :user_id', [
         'user_id' => $user_recover['user_id']
     ]);
 
-
+    // If not, return an error and log it
     if (count($ans) === 0) {
         security_log("Attempt of recovering password for non existing user ({$user_recover['user_id']})");
         return [
@@ -162,6 +173,7 @@ function recover_account()
     }
     $user = $ans[0];
 
+    // TODO Change email service
     $ans = send_mail($user['email'], "Password changed", "Your password has been changed successfully. If you didn't do this, please contact us.");
 
     if (!$ans) {
@@ -170,28 +182,32 @@ function recover_account()
         ];
     }
 
-    // update password
+    // Update password in the db
     $db->exec('UPDATE `user` SET `password` = :password WHERE `id` = :id', [
         'password' => password_hash($new_password, PASSWORD_DEFAULT),
         'id' => $user_recover['user_id']
     ]);
 
+    // Redirect to login
     header("Location: /login.php");
     die();
 }
 
+// This page can be requested only with POST
 if (isPost()) {
     $out = (isset($_POST["email"])) ? ask_recover_account() : recover_account();
 }
 
-$description = "just b00k password recover page";
+// TODO Change description
+$description = "At least Poe-try password recover page";
 $title = "Recover account";
 require_once "template/header.php"; ?>
 
+<!-- Recover account front-end -->
 <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto my-auto lg:py-0">
     <a href="#" class="flex items-center my-6 text-2xl font-semibold text-gray-900 ext-white">
         <img class="w-8 h-8 mr-2" src="static/icon.png" alt="logo" />
-        Just b00k
+        At least Poe-try
     </a>
     <div class="w-full bg-white rounded-lg shadow order md:mt-0 sm:max-w-md xl:p-0 g-gray-800 order-gray-700">
         <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
@@ -199,6 +215,7 @@ require_once "template/header.php"; ?>
                 Recover account
             </h1>
             <form class="space-y-4 md:space-y-6" action="" method="POST">
+                <!-- This part is shown when the user access to this page through the recovery link, to recover the account -->
                 <?php if (isset($_GET["token"])) { ?>
                     <input type="hidden" name="token" id="token"value="<?php echo p($_GET["token"]); ?>" />
                     <input type="hidden" name="user_id" id="user_id"value="<?php echo p($_GET["user_id"]); ?>" />
@@ -212,6 +229,7 @@ require_once "template/header.php"; ?>
                     </div>
                     <button type="submit" class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center g-blue-600 over:bg-blue-700 ocus:ring-blue-800">Recover</button>
 
+                    <!-- To show the error messages -->
                     <?php if (isset($out["msg"])) { ?>
                         <p class="mt-2 text-sm text-green-600" id="msg">
                             <?php echo $out["msg"]; ?>
@@ -222,6 +240,7 @@ require_once "template/header.php"; ?>
                         </p>
                     <?php } ?>
 
+                <!-- This part is shown at the beginning of the account recovery request of a user -->
                 <?php } else { ?>
                     <div>
                         <label for="email" class="block mb-2 text-sm font-medium text-gray-900 ext-white">Your email</label>
@@ -230,6 +249,7 @@ require_once "template/header.php"; ?>
 
                     <button type="submit" class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center g-blue-600 over:bg-blue-700 ocus:ring-blue-800">Recover</button>
 
+                    <!-- To show the error messages -->
                     <?php if (isset($out["msg"])) { ?>
                         <p class="mt-2 text-sm text-green-600" id="msg">
                             <?php echo $out["msg"]; ?>
@@ -245,5 +265,3 @@ require_once "template/header.php"; ?>
         </div>
     </div>
 </div>
-
-<?php require_once "template/footer.php"; ?>

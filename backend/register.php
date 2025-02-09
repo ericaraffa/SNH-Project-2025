@@ -17,7 +17,7 @@ function registerPost()
     $password =         $_POST["password"];
     $confirm_password = $_POST["confirm_password"];
 
-    // check types
+    // Check types
     if (!is_string($email) || !is_string($username) || !is_string($password)) {
         return "Invalid data";
     }
@@ -90,6 +90,7 @@ if (isPost()) {
     $error_msg = registerPost();
 }
 
+// TODO Change Description
 $description = "just b00k register page";
 $title = "Register";
 require_once "template/header.php"; ?>
@@ -136,6 +137,3 @@ require_once "template/header.php"; ?>
         </div>
     </div>
 </div>
-
-
-<?php require_once "template/footer.php"; ?>

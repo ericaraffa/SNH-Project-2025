@@ -45,7 +45,8 @@ function verifyGet()
 
 $error_msg = verifyGet();
 
-$description = "just b00k account verification page";
+// TODO Change description
+$description = "At least Poe-try account verification page";
 $title = "Verify account";
 require_once "template/header.php"; ?>
 
@@ -61,5 +62,3 @@ require_once "template/header.php"; ?>
         </div>
     </div>
 </div>
-
-<?php require_once "template/footer.php"; ?>

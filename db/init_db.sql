@@ -1,5 +1,6 @@
 USE snh;
 
+# Add "premium" field
 CREATE TABLE `user`(
     `id` INT NOT NULL AUTO_INCREMENT,
     `email` VARCHAR(200) NOT NULL,
@@ -40,6 +41,7 @@ CREATE TABLE `session`(
     FOREIGN KEY (`user_id`) REFERENCES `user`(`id`)
 ) CHARACTER SET=utf8mb4;
 
+# Change this to "novel" -> (id, title, text (if short), user, premium)
 CREATE TABLE `book`(
     `id` INT NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(200) NOT NULL,
@@ -53,6 +55,7 @@ CREATE TABLE `book`(
     PRIMARY KEY (`id`)
 ) CHARACTER SET=utf8mb4;
 
+# TODO Delete this
 CREATE TABLE `order`(
     `id` INT NOT NULL AUTO_INCREMENT,
     `user_id` INT NOT NULL,
@@ -66,6 +69,7 @@ CREATE TABLE `order`(
     FOREIGN KEY (`user_id`) REFERENCES `user`(`id`)
 ) CHARACTER SET=utf8mb4;
 
+# TODO Delete this
 CREATE TABLE `order_book`(
     `order_id` INT NOT NULL,
     `book_id` INT NOT NULL,
@@ -96,6 +100,7 @@ CREATE TABLE `user_lock`(
 
 SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci;
 
+# TODO Change this
 INSERT INTO book VALUES 
     (DEFAULT, 'Spaghetti Hacker', 'Stefano Chiccarelli', 'History, Computer science, Italy', 'spaghetti-hacker.jpg', "Grazie a questo libro, è possibile capire come e perché sono nati gli Spaghetti Hacker, e in che cosa, oggi, si sono trasformati. Ma soprattutto, quali sono le cause che hanno trasformato la rete italiana in un colosso dai piedi d'argilla.", 1960),
     (DEFAULT, 'Doctor Newtron', 'Dario Bressanini', 'History, Comics, Science', 'doctor-newtron.jpg', "Scienziato e supereroe, capace di controllare gli elementi trasformando a piacimento la materia, Doctor Newtron è uno dei più amati e leggendari personaggi del fumetto. Allora, perché il suo nome suona nuovo?

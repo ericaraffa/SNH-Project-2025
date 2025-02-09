@@ -1,9 +1,10 @@
 <?php
 require_once './lib/utils.php';
+
+// Check if the user is logged
 $user = getLoggedUser();
 
-// TODO Change description
-$description = "just b00k page not found";
+$description = "At least Poe-try Page Not Found";
 $title = "Page not found!";
 require_once "template/header.php"; ?>
 
