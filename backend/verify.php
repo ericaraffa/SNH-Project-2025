@@ -1,5 +1,6 @@
 <?php
 require_once './lib/utils.php';
+require_once './lib/DB.php';
 
 function verifyGet()
 {
@@ -13,8 +14,6 @@ function verifyGet()
     if (!is_string($token)) {
         return "Invalid token";
     }
-
-    require_once './lib/DB.php';
 
     // retrieve user associated with the token
     $db = DB::getInstance();
@@ -43,6 +42,7 @@ function verifyGet()
     die();
 }
 
+// Verify account request
 $error_msg = verifyGet();
 
 // TODO Change description
