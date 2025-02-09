@@ -2,7 +2,8 @@
 require_once './lib/utils.php';
 $user = getLoggedUser();
 
-$description = "just b00k home page";
+// TODO This page could be deleted: our index is the login page
+$description = "At least Poe-try home page";
 $title = "Home";
 require_once "template/header.php"; ?>
 
@@ -12,18 +13,15 @@ require_once "template/header.php"; ?>
         <h1
             class="text-slate-900 font-bold text-4xl sm:text-5xl lg:text-6xl tracking-tight text-center"
         >
-            <code class="text-sky-500 font-mono">Just bOOk</code> - A Safe Haven
-            for Book Lovers Everywhere
+            <code class="text-sky-500 font-mono">At least Poe-try</code> - A Safe Haven
+            for Literature Lovers Everywhere
         </h1>
     </div>
 
     <p class="mt-6 text-lg text-slate-600 text-center max-w-3xl mx-auto">
         Welcome to <code class="font-mono font-medium text-sky-500"
-            >JustbOOk</code
-        >, the ultimate online destination for book enthusiasts who prioritize
-        safety, authenticity, and a wide selection of literature. Our website is
-        designed with a user-friendly interface, making your journey from
-        browsing to buying both enjoyable and secure.
+            >At least Poe-try</code
+        >
     </p>
     <div class="mt-6 sm:mt-10 flex justify-center text-sm">
         <a
@@ -32,6 +30,3 @@ require_once "template/header.php"; ?>
         >
     </div>
 </div>
-
-
-<?php require_once "template/footer.php"; ?>

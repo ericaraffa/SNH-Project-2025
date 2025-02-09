@@ -2,8 +2,8 @@
 <html lang="en">
 
 <head>
-    <title>just b00k<?php echo (isset($title)) ? " | " . $title : ""; ?></title>
-    <meta name="description" content="<?php echo (isset($description) ? $description : "just_book"); ?>" />
+    <title>At least Poe-try<?php echo (isset($title)) ? " | " . $title : ""; ?></title>
+    <meta name="description" content="<?php echo (isset($description) ? $description : "at_least_poe-try"); ?>" />
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg" href="/static/icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -22,8 +22,8 @@
             <nav class="bg-white border-gray-200 order-gray-600 g-gray-900 border-y">
                 <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl p-4">
                     <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
-                        <img src="static/icon.png" class="h-8" alt="just b00k logo" />
-                        <span class="self-center text-2xl font-semibold whitespace-nowrap ext-white">just b00k</span>
+                        <img src="static/icon.png" class="h-8" alt="at least poe-try logo" />
+                        <span class="self-center text-2xl font-semibold whitespace-nowrap ext-white">At least Poe-try</span>
                     </a>
                     <button data-collapse-toggle="mega-menu-full" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 ext-gray-400 over:bg-gray-700 ocus:ring-gray-600" aria-controls="mega-menu-full" aria-expanded="false" onclick="toggle_menu()">
                         <span class="sr-only">Open main menu</span>
@@ -33,6 +33,7 @@
                     </button>
                     <div id="mega-menu-full" class="hidden items-center justify-between font-medium w-full md:flex md:w-auto md:order-1">
                         <ul class="flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white g-gray-800 md:g-gray-900 order-gray-700">
+                            <!-- TODO Change these links, some of which can be seen only by logged users-->
                             <li>
                                 <a href="/" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 ext-white md:over:text-blue-500 over:bg-gray-700 over:text-blue-500 md:over:bg-transparent order-gray-700" aria-current="page">Home</a>
                             </li>
@@ -64,6 +65,7 @@
                                     <a href="/register.php" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 ext-white md:over:text-blue-500 over:bg-gray-700 over:text-blue-500 md:over:bg-transparent order-gray-700">Register</a>
                                 </li>
                             <?php } ?>
+                                <!--TODO Probably this can be deleted 
                                 <li class="<?php echo (isset($in_checkout)) ? "hidden" : ""; ?>">
                                     <button class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 ext-white md:over:text-blue-500 over:bg-gray-700 over:text-blue-500 md:over:bg-transparent order-gray-700" onclick="toggle_cart()">
                                         <div class="flex justify-center items-center">
@@ -80,10 +82,11 @@
                                         </div>
                                     </button>
                                 </li>
-
+                                -->
                         </ul>
                     </div>
                 </div>
+                <!--TODO Probably this can be deleted 
                 <div class="relative z-10 hidden" id="cart_menu" aria-labelledby="slide-over-title" role="dialog" aria-modal="true">
                     <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
 
@@ -141,4 +144,5 @@
                         </div>
                     </div>
                 </div>
+                -->
             </nav>

@@ -1,14 +1,18 @@
 <?php
 require_once './lib/utils.php';
+require_once './lib/DB.php';
+
+// Check if the user is logged
 $user = getLoggedUser();
 
+// User not authenticated, page not found
 if ($user == null) {
     raiseNotFound();
 }
 
-require_once './lib/DB.php';
-
-// fetch all books
+// TODO This page will show the novels: change queries to fetch and show novels:
+// - short ones are in "text" field and will be printed as is
+// - for the full-length ones, the link to the download must be fetched
 $db = DB::getInstance();
 $query = <<<QUERY
     SELECT DISTINCT
@@ -22,21 +26,22 @@ $ans = $db->exec($query, [
     'user_id' => $user['id']
 ]);
 
-$description = "just b00k bookshelf";
-$title = "Bookshelf";
+$description = "At least Poe-try homepage";
+$title = "Homepage";
 require_once "template/header.php"; ?>
 
 <?php if (count($ans) === 0) { ?>
-    <p class="text-2xl font-bold text-center">No books yet</p>
+    <p class="text-2xl font-bold text-center">Are you even poe-trying?</p>
 <?php } else { ?>
 
+    <!-- Grid with the novels -->
     <div class="mx-auto my-10 px-3">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-[10rem] gap-y-10">
             <?php foreach ($ans as &$book) { ?>
                 <div class="flex flex-col justify-between w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow g-gray-800 order-gray-700">
                     <div>
                         <a href="/book.php?book_id=<?php echo $book['id']; ?>" class="flex">
-                            <img class="p-3 rounded-t-lg mx-auto my-auto h-[25rem]" src="/static/books/<?php echo p($book['picture']); ?>" alt="cover of book" aria-label="Book cover for <?php echo p($book['name']); ?>" />
+                            <img class="p-3 rounded-t-lg mx-auto my-auto h-[25rem]" src="/static/books/<?php echo p($book['picture']); ?>" alt="novel" aria-label="<?php echo p($book['name']); ?>" />
                         </a>
                         <div class="px-5 pb-5 block">
                             <h5 class="text-xl font-semibold tracking-tight text-gray-900 ext-white">
@@ -59,4 +64,3 @@ require_once "template/header.php"; ?>
         </div>
     </div>
 <?php } ?>
-<?php require_once "template/footer.php"; ?>

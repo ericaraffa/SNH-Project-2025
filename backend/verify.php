@@ -1,5 +1,6 @@
 <?php
 require_once './lib/utils.php';
+require_once './lib/DB.php';
 
 function verifyGet()
 {
@@ -13,8 +14,6 @@ function verifyGet()
     if (!is_string($token)) {
         return "Invalid token";
     }
-
-    require_once './lib/DB.php';
 
     // retrieve user associated with the token
     $db = DB::getInstance();
@@ -43,9 +42,11 @@ function verifyGet()
     die();
 }
 
+// Verify account request
 $error_msg = verifyGet();
 
-$description = "just b00k account verification page";
+// TODO Change description
+$description = "At least Poe-try account verification page";
 $title = "Verify account";
 require_once "template/header.php"; ?>
 
@@ -61,5 +62,3 @@ require_once "template/header.php"; ?>
         </div>
     </div>
 </div>
-
-<?php require_once "template/footer.php"; ?>

@@ -1,5 +1,6 @@
 <?php
 require_once './lib/utils.php';
+require_once './lib/DB.php';
 
 function unlockGet()
 {
@@ -13,8 +14,6 @@ function unlockGet()
     if (!is_string($token)) {
         return "Invalid token";
     }
-
-    require_once './lib/DB.php';
 
     // retrieve user associated with the token
     $db = DB::getInstance();
@@ -39,6 +38,7 @@ function unlockGet()
         'user_id' => $user_id
     ]);
 
+    // Send email to inform the user
     $ans = send_mail($user['email'], "User unlocked", "Your user has been unlocked. If you didn't do this, please contact us.");
 
     if (!$ans) {
@@ -49,9 +49,10 @@ function unlockGet()
     die();
 }
 
+// Unlock request
 $error_msg = unlockGet();
 
-$description = "just b00k account unlock page";
+$description = "At least Poe-try account unlock page";
 $title = "Unlock account";
 require_once "template/header.php"; ?>
 
@@ -67,5 +68,3 @@ require_once "template/header.php"; ?>
         </div>
     </div>
 </div>
-
-<?php require_once "template/footer.php"; ?>

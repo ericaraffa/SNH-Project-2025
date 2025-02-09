@@ -1,11 +1,15 @@
 <?php
 require_once './lib/utils.php';
+require_once './lib/DB.php';
+
+// Check if the user is logged
 $user = getLoggedUser();
 
+// TODO Probably this page is not necessary and can be deleted
 function bookGet()
 {
-    require_once './lib/DB.php';
 
+    // 
     if (isset($_GET["book_id"])) {
         $book_id = $_GET["book_id"];
         if (!is_numeric($book_id)) {
@@ -121,6 +125,3 @@ require_once "template/header.php"; ?>
         </div>
     </div>
 <?php } ?>
-
-
-<?php require_once "template/footer.php"; ?>

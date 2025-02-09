@@ -1,11 +1,15 @@
 <?php
 require_once './lib/utils.php';
+require_once './lib/DB.php';
+
 $user = getLoggedUser();
 
 if ($user != null) {
     redirect_authenticated();
 }
 
+// Registration request
+// TODO Register using just the email (NO EXPLICIT USERNAME)
 function registerPost()
 {
     if (!isset($_POST['email']) || !isset($_POST['username']) || !isset($_POST['password']) || !isset($_POST['confirm_password'])) {
@@ -17,7 +21,7 @@ function registerPost()
     $password =         $_POST["password"];
     $confirm_password = $_POST["confirm_password"];
 
-    // check types
+    // Check types
     if (!is_string($email) || !is_string($username) || !is_string($password)) {
         return "Invalid data";
     }
@@ -33,8 +37,6 @@ function registerPost()
     if (!checkEmail($email)) {
         return "Invalid email";
     }
-
-    require_once './lib/DB.php';
 
     $db = DB::getInstance();
 
@@ -90,14 +92,15 @@ if (isPost()) {
     $error_msg = registerPost();
 }
 
-$description = "just b00k register page";
+
+$description = "At least Poe-try register page";
 $title = "Register";
 require_once "template/header.php"; ?>
 
 <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto my-auto lg:py-0">
     <a href="/" class="flex items-center my-6 text-2xl font-semibold text-gray-900 ext-white">
         <img class="w-8 h-8 mr-2" src="static/icon.png" alt="logo" />
-        Just b00k
+        At least Poe-try
     </a>
     <div class="w-full bg-white rounded-lg shadow order md:mt-0 sm:max-w-md xl:p-0 g-gray-800 order-gray-700">
         <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
@@ -136,6 +139,3 @@ require_once "template/header.php"; ?>
         </div>
     </div>
 </div>
-
-
-<?php require_once "template/footer.php"; ?>
