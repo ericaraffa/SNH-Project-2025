@@ -6,10 +6,8 @@ services:
     ports:
       - "3000:8080"
     privileged: false
-    environment:
-      - GMAIL_EMAIL=${GMAIL_EMAIL}
-      - SENDGRID_API_KEY=${SENDGRID_API_KEY}
-      - DEPLOYED_DOMAIN=${DEPLOYED_DOMAIN}
+    env_file:
+      - .env.example
 
   
   db:
