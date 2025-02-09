@@ -258,15 +258,15 @@
             error_log('Missing GMAIL_EMAIL env variable');
             return false;
         }
-
+      
         // Create email
-        $email = new Mail();
+        $sendgrid = new \SendGrid($SENDGRID_API_KEY); #
+        $email = new Mail(); #
         $email->setFrom($GMAIL_EMAIL, "SNH Project");
         $email->setSubject($object);
         $email->addTo($to);
         $email->addContent($content_type, $content);
-        $sendgrid = new \SendGrid($SENDGRID_API_KEY);
-
+      
         // Try to send the email
         try {
             $sendgrid->send($email);
