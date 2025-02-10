@@ -5,7 +5,7 @@ require_once './lib/DB.php';
 // Check if the user is logged
 $user = getLoggedUser();
 
-// TODO Probably this page is not necessary and can be deleted
+// TODO Change the part where it gets the book info
 function bookGet()
 {
 
@@ -39,17 +39,23 @@ function bookGet()
     return $ans;
 }
 
+// TODO This page will show the novels: change queries to fetch and show novels:
+// - short ones are in "text" field and will be printed as is
+// - for the full-length ones, the link to the download must be fetched
+// The non-premium users can read just non-premium novels
+
 $ans = bookGet();
 
 if (count($ans) === 1) {
     $description = p($ans[0]['name']);
     $title = p($ans[0]['name']);
 } else {
-    $description = "just b00k book list";
-    $title = "Books";
+    $description = "At least Poe-try novels list";
+    $title = "Novels";
 }
 require_once "template/header.php"; ?>
 
+<!-- TODO Delete the part where it shows the book info
 <?php if (count($ans) === 1) {
     $book = $ans[0]; ?>
     <div class="lg:mx-20 md:mx-10 my-10 px-3">
@@ -93,6 +99,7 @@ require_once "template/header.php"; ?>
 
     </div>
 <?php } else { ?>
+    -->
     <div class="mx-auto my-10 px-3">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-[10rem] gap-y-10">
             <?php foreach ($ans as &$book) { ?>
@@ -124,4 +131,6 @@ require_once "template/header.php"; ?>
             <?php } ?>
         </div>
     </div>
+    <!--- 
 <?php } ?>
+-->

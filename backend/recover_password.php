@@ -31,7 +31,8 @@ function ask_recover_account()
     if (count($ans) === 0) {
         security_log("Attempt of recovering password for non existing user ({$email})");
         return [
-            "msg" => "Check your email for the password recovery link",
+            // TODO DEBUG 
+            "msg" => "FALSO, Check your email for the password recovery link",
         ];
     }
 
@@ -49,7 +50,8 @@ function ask_recover_account()
 
     if(count($ans) > 0) {
         return [
-            "msg" => "Check your email for the password recovery link",
+            // TODO DEBUG
+            "msg" => "PENDING, Check your email for the password recovery link",
         ];
     }
 
@@ -83,7 +85,8 @@ function ask_recover_account()
 
     // Return result of the request
     return [
-        "msg" => "Check your email for the password recovery link",
+        // TODO DEBUG
+        "msg" => "GIUSTO, Check your email for the password recovery link",
     ];
 }
 
@@ -217,6 +220,7 @@ require_once "template/header.php"; ?>
             <form class="space-y-4 md:space-y-6" action="" method="POST">
                 <!-- This part is shown when the user access to this page through the recovery link, to recover the account -->
                 <?php if (isset($_GET["token"])) { ?>
+                    <!-- Insert hidden token for security -->
                     <input type="hidden" name="token" id="token"value="<?php echo p($_GET["token"]); ?>" />
                     <input type="hidden" name="user_id" id="user_id"value="<?php echo p($_GET["user_id"]); ?>" />
                     <div>

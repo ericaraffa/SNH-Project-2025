@@ -10,9 +10,7 @@ if ($user == null) {
     raiseNotFound();
 }
 
-// TODO This page will show the novels: change queries to fetch and show novels:
-// - short ones are in "text" field and will be printed as is
-// - for the full-length ones, the link to the download must be fetched
+// TODO Delete this page
 $db = DB::getInstance();
 $query = <<<QUERY
     SELECT DISTINCT
