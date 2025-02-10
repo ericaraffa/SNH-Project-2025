@@ -126,6 +126,8 @@ require_once "template/header.php"; ?>
                 <?php } ?>
 
             </form>
+
+            <!-- TODO The admin has a panel to change the other users privilege -->
         </div>
     </div>
 </div>

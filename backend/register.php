@@ -74,6 +74,7 @@ function registerPost()
         'password' => password_hash($password, PASSWORD_DEFAULT)
     ]);
 
+    // Last logged user
     $user_id = $db->lastInsertId();
 
     // add verification token to db

@@ -18,6 +18,3 @@ require_once "template/header.php"; ?>
     </div>
 
 </div>
-
-
-<?php require_once "template/footer.php"; ?>
