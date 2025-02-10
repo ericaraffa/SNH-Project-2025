@@ -6,34 +6,26 @@ require_once './lib/DB.php';
 // Check if the user is logged
 $user = getLoggedUser();
 
-// TODO Get novel id
-$book_id = $_GET['book_id'];
-
-if (!is_numeric($book_id)) {
-    raiseNotFound();
+// Check if a file is provided
+if (!isset($_GET['novel_id'])) {
+    die("Error: No file specified.");
 }
 
+// Sanitize the filename (prevent directory traversal attacks)
+$fileName = basename($_GET['novel_id']);
+$filePath = STORAGE . $fileName;
 
-
-// TODO fetch all novels
-$db = DB::getInstance();
-$query = <<<QUERY
-            SELECT DISTINCT `b`.`id`, `b`.`name`
-            FROM `order_book` `ob`
-            INNER JOIN `book` `b` ON `ob`.`book_id` = `b`.`id`
-            INNER JOIN `order` `o` ON `o`.`id` = `ob`.`order_id`
-            WHERE `o`.`user_id` = :user_id AND `b`.id = :book_id
-        QUERY;
-
-// TODO select the novel 
-$ans = $db->exec($query, [
-    'user_id' => $user['id'],
-    'book_id' => $book_id
-]);
-
-if (count($ans) === 0) {
-    raiseNotFound();
+// Check if the file exists and is readable
+if (!file_exists($filePath) || !is_readable($filePath)) {
+    die("Error: File not found.");
 }
 
+// Set headers to force download
+header("Content-Type: application/pdf");
+header("Content-Disposition: attachment; filename=\"$fileName\"");
+header("Content-Length: " . filesize($filePath));
 
-serveFile(STORAGE . $ans[0]['id'] . '.pdf', $ans[0]['name'] . '.pdf');
+// Read and output the file
+readfile($filePath);
+exit();
+?>

@@ -31,6 +31,7 @@
     header('X-Content-Type-Options: nosniff');    
 
     // This should be created in an offline folder
+    // TODO Modify STORAGE directory
     define('STORAGE',  '/var/www/html/ebooks/');
     define('OK', 200);
     define('BAD_REQUEST', 400);
