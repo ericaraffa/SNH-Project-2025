@@ -40,6 +40,10 @@
                             <li>
                                 <a href="/novel.php" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 ext-white md:over:text-blue-500 over:bg-gray-700 over:text-blue-500 md:over:bg-transparent order-gray-700">Novels</a>
                             </li>
+                            <!-- Upload is here for debugging. Only logged in users can upload or download. -->
+                            <li>
+                                <a href="/upload.php" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 ext-white md:over:text-blue-500 over:bg-gray-700 over:text-blue-500 md:over:bg-transparent order-gray-700">Upload</a>
+                            </li>
                             <?php if ($user != null) { ?>
                                 <li>
                                     <a href="/bookshelf.php" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 ext-white md:over:text-blue-500 over:bg-gray-700 over:text-blue-500 md:over:bg-transparent order-gray-700">Bookshelf</a>

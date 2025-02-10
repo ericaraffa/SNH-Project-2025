@@ -110,6 +110,9 @@ CREATE TABLE `user_lock`(
 
 SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci;
 
+INSERT INTO user VALUES
+    (DEFAULT, 'email', 'username', 'pwd', TRUE, FALSE, TRUE);
+
 # TODO Change this
 INSERT INTO novel VALUES 
     (DEFAULT, "Claudione", "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
@@ -125,6 +128,7 @@ SONO ANCORA IL PIU' RICCO CHE C'E'
 NONOSTANTE I MIEI CAZZI SIAN TREEEE
 SONO ANCORA IL PIU' RICCO CHE C'E'", FALSE),
     (DEFAULT, "Plenty of Lasagna, Today se magna", DEFAULT, DEFAULT);
+
 
 INSERT INTO book VALUES 
     (DEFAULT, 'Spaghetti Hacker', 'Stefano Chiccarelli', 'History, Computer science, Italy', 'spaghetti-hacker.jpg', "Grazie a questo libro, è possibile capire come e perché sono nati gli Spaghetti Hacker, e in che cosa, oggi, si sono trasformati. Ma soprattutto, quali sono le cause che hanno trasformato la rete italiana in un colosso dai piedi d'argilla.", 1960),
