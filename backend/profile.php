@@ -98,7 +98,7 @@ require_once "template/header.php"; ?>
             <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ext-white">
                 Change password
             </h1>
-            < class="space-y-4 md:space-y-6" action="" method="POST">
+            <form class="space-y-4 md:space-y-6" action="" method="POST">
                 <input type="hidden" name="csrf_token" value="<?php echo get_csrf_token(); ?>">
                 <div>
                     <label for="password" class="block mb-2 text-sm font-medium text-gray-900 ext-white">Old password</label>
