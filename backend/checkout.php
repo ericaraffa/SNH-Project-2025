@@ -11,9 +11,7 @@ if ($user == null) {
     raiseNotFound();
 }
 
-// TODO This page will turn into the "upload" page, with all the checks on the user input:
-// - for short novels there is a text field and a submit button
-// - for full-length novels there is a button that allows the user to upload a pdf from the file system
+// TODO Delete this page
 function orderPost($user)
 {
     // Check the token

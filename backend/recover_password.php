@@ -59,7 +59,7 @@ function ask_recover_account()
     $token = bin2hex(random_bytes(32));
     $DEPLOYED_DOMAIN = getenv('DEPLOYED_DOMAIN');
 
-    // TODO Change email service
+    // TODO Test this
     // Send code via email
     $ans = send_mail(
         $email,
@@ -176,7 +176,7 @@ function recover_account()
     }
     $user = $ans[0];
 
-    // TODO Change email service
+    // TODO Test this
     $ans = send_mail($user['email'], "Password changed", "Your password has been changed successfully. If you didn't do this, please contact us.");
 
     if (!$ans) {
@@ -201,7 +201,6 @@ if (isPost()) {
     $out = (isset($_POST["email"])) ? ask_recover_account() : recover_account();
 }
 
-// TODO Change description
 $description = "At least Poe-try password recover page";
 $title = "Recover account";
 require_once "template/header.php"; ?>

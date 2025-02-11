@@ -5,7 +5,7 @@ require_once './lib/DB.php';
 // Check if the user is logged
 $user = getLoggedUser();
 
-// TODO Change the part where it gets the book info
+// TODO Delete this page
 function bookGet()
 {
 

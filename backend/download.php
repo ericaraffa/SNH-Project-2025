@@ -2,7 +2,6 @@
 require_once './lib/utils.php';
 require_once './lib/DB.php';
 
-// TODO This page should not be necessary, because the download is requested from the homepage
 // Check if the user is logged
 $user = getLoggedUser();
 
