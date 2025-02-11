@@ -3,15 +3,18 @@ require_once './lib/utils.php';
 require_once './lib/DB.php';
 
 // Check user authentication
+
 $user = getLoggedUser();
 
-#if ($user == null) {
-#    header("Location: login.php");
-#    exit();
-#}
+if ($user == null) {
+    header("Location: login.php");
+    exit();
+}
 
 function handleUpload()
 {
+    global $user;
+
     if (!isset($_POST['novel_type'])) {
         return "Please select a novel type.";
     }
@@ -34,11 +37,12 @@ function handleUpload()
         // TODO Check if premium
         // In "novels" we need a boolean field 'premium'
         $premium = isset($_POST['premium']) ? 1 : 0;
-        
-        $db->exec('INSERT INTO `novels` (`user_id`, `title`, `content`, `type`) VALUES (:user_id, :title, :content, "short")', [
-            'user_id' => $user['id'],
+
+                
+        $db->exec('INSERT INTO `novels` (`title`, `text`, `premium`) VALUES (:title, :text, :premium)', [
             'title' => $title,
-            'content' => $content
+            'text' => $content,
+            'premium' => $premium
         ]);
         
         return "Short novel uploaded successfully!";
@@ -47,7 +51,13 @@ function handleUpload()
             return "Error uploading PDF file.";
         }
         
+        # TODO
         $pdfPath = 'uploads/' . basename($_FILES['pdf']['name']);
+
+        $novelId = $db->lastInsertId();
+        $fileName = basename($novelId);
+        $pdfPath = STORAGE . $fileName . ".pdf";
+
         if (!move_uploaded_file($_FILES['pdf']['tmp_name'], $pdfPath)) {
             return "Failed to save the uploaded file.";
         }
@@ -61,10 +71,9 @@ function handleUpload()
         // TODO check if premium
         $premium = isset($_POST['premium']) ? 1 : 0;
         
-        $db->exec('INSERT INTO `novels` (`user_id`, `title`, `file_path`, `type`) VALUES (:user_id, :title, :file_path, "long")', [
-            'user_id' => $user['id'],
+        $db->exec('INSERT INTO `novels` (`title`, `text`, `premium`) VALUES (:title, NULL, :premium)', [
             'title' => $title,
-            'file_path' => $pdfPath
+            'premium' => $premium
         ]);
         
         return "Long novel uploaded successfully!";
