@@ -8,6 +8,7 @@ CREATE TABLE `user`(
     `password` CHAR(64) NOT NULL,
     `verified` BOOLEAN DEFAULT FALSE,
     `locked` BOOLEAN DEFAULT FALSE,
+    `premium` BOOLEAN DEFAULT FALSE,
 
     PRIMARY KEY (`id`)
 ) CHARACTER SET=utf8mb4;
@@ -41,7 +42,7 @@ CREATE TABLE `session`(
     FOREIGN KEY (`user_id`) REFERENCES `user`(`id`)
 ) CHARACTER SET=utf8mb4;
 
-# Change this to "novel" -> (id, title, text (if short), user, premium)
+# Change this to "novel" -> (id, title, text (if short), premium)
 CREATE TABLE `book`(
     `id` INT NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(200) NOT NULL,
@@ -51,6 +52,15 @@ CREATE TABLE `book`(
     `description` TEXT DEFAULT NULL,
 
     `price` INTEGER NOT NULL,
+
+    PRIMARY KEY (`id`)
+) CHARACTER SET=utf8mb4;
+
+CREATE TABLE `novel`(
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `title` VARCHAR(200) NOT NULL,
+    `text` TEXT DEFAULT NULL,
+    `premium` BOOLEAN DEFAULT FALSE,
 
     PRIMARY KEY (`id`)
 ) CHARACTER SET=utf8mb4;
@@ -101,6 +111,21 @@ CREATE TABLE `user_lock`(
 SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 # TODO Change this
+INSERT INTO novel VALUES 
+    (DEFAULT, "Claudione", "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
+NONOSTANTE NELLA MIA CREDENZA SI NOTI L'ASSANZA DI ZUCCHERO E THEEEEEE
+SONO ANCORA IL SIGNORE DEL MONDO PIu' RICCO CHE C'e'
+IO
+NONOSTANTE NEL MIO GUARDAROBA DI TUTTA LA ROBA E' RIMASTO UN GILEEEET
+SONO ANCORA IL SIGORE DEL MONDO PIU' RICCO CHE C'E'
+NONOSTANTE LA SUA TRACOTANZA E MI MANCA LA GRASSA SUI CLAUDIO GLASSEEEEEE
+SONO LO SGRUDOLO DEL MONDO PIU' RICCO CHE C'E'
+NONOSTANTE I DIVANI E I BIDEEEET
+SONO ANCORA IL PIU' RICCO CHE C'E'
+NONOSTANTE I MIEI CAZZI SIAN TREEEE
+SONO ANCORA IL PIU' RICCO CHE C'E'", FALSE),
+    (DEFAULT, "Plenty of Lasagna, Today se magna", DEFAULT, DEFAULT);
+
 INSERT INTO book VALUES 
     (DEFAULT, 'Spaghetti Hacker', 'Stefano Chiccarelli', 'History, Computer science, Italy', 'spaghetti-hacker.jpg', "Grazie a questo libro, è possibile capire come e perché sono nati gli Spaghetti Hacker, e in che cosa, oggi, si sono trasformati. Ma soprattutto, quali sono le cause che hanno trasformato la rete italiana in un colosso dai piedi d'argilla.", 1960),
     (DEFAULT, 'Doctor Newtron', 'Dario Bressanini', 'History, Comics, Science', 'doctor-newtron.jpg', "Scienziato e supereroe, capace di controllare gli elementi trasformando a piacimento la materia, Doctor Newtron è uno dei più amati e leggendari personaggi del fumetto. Allora, perché il suo nome suona nuovo?
