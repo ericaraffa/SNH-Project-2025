@@ -110,7 +110,6 @@ CREATE TABLE `user_lock`(
 
 SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci;
 
-# TODO Change this
 INSERT INTO novel VALUES 
     (DEFAULT, "Claudione", "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
 NONOSTANTE NELLA MIA CREDENZA SI NOTI L'ASSANZA DI ZUCCHERO E THEEEEEE
@@ -124,8 +123,9 @@ NONOSTANTE I DIVANI E I BIDEEEET
 SONO ANCORA IL PIU' RICCO CHE C'E'
 NONOSTANTE I MIEI CAZZI SIAN TREEEE
 SONO ANCORA IL PIU' RICCO CHE C'E'", FALSE),
-    (DEFAULT, "Plenty of Lasagna, Today se magna", DEFAULT, DEFAULT);
+    (DEFAULT, "Plenty of Lasagna, Today se magna", DEFAULT, TRUE);
 
+# TODO Change this
 INSERT INTO book VALUES 
     (DEFAULT, 'Spaghetti Hacker', 'Stefano Chiccarelli', 'History, Computer science, Italy', 'spaghetti-hacker.jpg', "Grazie a questo libro, è possibile capire come e perché sono nati gli Spaghetti Hacker, e in che cosa, oggi, si sono trasformati. Ma soprattutto, quali sono le cause che hanno trasformato la rete italiana in un colosso dai piedi d'argilla.", 1960),
     (DEFAULT, 'Doctor Newtron', 'Dario Bressanini', 'History, Comics, Science', 'doctor-newtron.jpg', "Scienziato e supereroe, capace di controllare gli elementi trasformando a piacimento la materia, Doctor Newtron è uno dei più amati e leggendari personaggi del fumetto. Allora, perché il suo nome suona nuovo?
