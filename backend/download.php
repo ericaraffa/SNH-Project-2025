@@ -11,13 +11,14 @@ if ($user == null) {
 }
 
 // Check if a file is provided
-if (!isset($_GET['novel_id'])) {
+if (!isset($_GET['novel_id']) || !isset($_GET['novel_title'])) {
     die("Error: No file specified.");
 }
 
 // Sanitize the filename (prevent directory traversal attacks)
-$fileName = basename($_GET['novel_id']);
-$filePath = STORAGE . $fileName;
+$fileId = basename($_GET['novel_id']);
+$fileName = basename($_GET['novel_title']) . ".pdf";
+$filePath = STORAGE . $fileId;
 
 // Check if the file exists and is readable
 if (!file_exists($filePath) || !is_readable($filePath)) {
