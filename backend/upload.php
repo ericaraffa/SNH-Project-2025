@@ -35,17 +35,23 @@ function handleUpload()
         }
 
         // TODO Check if premium
-        // In "novels" we need a boolean field 'premium'
+        // In "novel" we need a boolean field 'premium'
         $premium = isset($_POST['premium']) ? 1 : 0;
 
                 
-        $db->exec('INSERT INTO `novels` (`title`, `text`, `premium`) VALUES (:title, :text, :premium)', [
+        $ans = $db->exec('INSERT INTO `novel` (`title`, `text`, `premium`) VALUES (:title, :text, :premium)', [
             'title' => $title,
             'text' => $content,
             'premium' => $premium
         ]);
+
+        if($ans === false){
+            return "Error uploading the novel.";
+        } else {
+            return "Short novel uploaded successfully!";
+        }
         
-        return "Short novel uploaded successfully!";
+        
     } elseif ($_POST['novel_type'] === 'long') {
         if (!isset($_FILES['pdf']) || $_FILES['pdf']['error'] != UPLOAD_ERR_OK) {
             return "Error uploading PDF file.";
@@ -71,12 +77,16 @@ function handleUpload()
         // TODO check if premium
         $premium = isset($_POST['premium']) ? 1 : 0;
         
-        $db->exec('INSERT INTO `novels` (`title`, `text`, `premium`) VALUES (:title, NULL, :premium)', [
+        $ans = $db->exec('INSERT INTO `novel` (`title`, `text`, `premium`) VALUES (:title, NULL, :premium)', [
             'title' => $title,
             'premium' => $premium
         ]);
-        
-        return "Long novel uploaded successfully!";
+
+        if($ans === false){
+            return "Error uploading PDF file.";
+        } else {        
+            return "Long novel uploaded successfully!";
+        }
     }
     
     return "Invalid novel type.";
