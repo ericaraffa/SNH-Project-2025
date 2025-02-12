@@ -53,30 +53,30 @@ function handleUpload()
         
         
     } elseif ($_POST['novel_type'] === 'long') {
+
+        // Error handling
+        if (!isset($_POST['title'])) {
+            return "Title is required for the novel.";
+        }
+
         if (!isset($_FILES['pdf']) || $_FILES['pdf']['error'] != UPLOAD_ERR_OK) {
             return "Error uploading PDF file.";
         }
-        
-        # TODO
-        $pdfPath = 'uploads/' . basename($_FILES['pdf']['name']);
 
-        $novelId = $db->lastInsertId();
-        $fileName = basename($novelId);
-        $pdfPath = STORAGE . $fileName . ".pdf";
-
-        if (!move_uploaded_file($_FILES['pdf']['tmp_name'], $pdfPath)) {
-            return "Failed to save the uploaded file.";
+        // Check boundary size
+        if ($_FILES['pdf']['size'] > MAX_SIZE_PDF){
+            return "Error PDF file exceeds max dimension.";
         }
-        
-        $title = $_POST['title'] ?? "Untitled Novel";
 
+        $title = $_POST['title'];
         if (!is_string($title)) {
             return "Invalid title";
         }        
 
-        // TODO check if premium
+        // Check if premium
         $premium = isset($_POST['premium']) ? 1 : 0;
         
+        // Insert in database
         $ans = $db->exec('INSERT INTO `novel` (`title`, `text`, `premium`) VALUES (:title, NULL, :premium)', [
             'title' => $title,
             'premium' => $premium
@@ -85,6 +85,16 @@ function handleUpload()
         if($ans === false){
             return "Error uploading PDF file.";
         } else {        
+            $novelId = $db->lastInsertId();
+            $fileName = basename($novelId);
+            $pdfPath = STORAGE . $fileName . ".pdf";
+            # TODO
+            $pdfPath = 'uploads/' . basename($_FILES['pdf']['name']);
+        
+            # Upload file .pdf
+            if (!move_uploaded_file($_FILES['pdf']['tmp_name'], $pdfPath)) {
+                return "Failed to save the uploaded file.";
+            }
             return "Long novel uploaded successfully!";
         }
     }
@@ -116,11 +126,12 @@ require_once "template/header.php";
             </div>
             <div>
                 <label for="title" class="block text-sm font-medium text-gray-900">Title</label>
-                <input type="text" name="title" id="title" class="w-full p-2 border rounded" required>
+                <input type="text" name="title" id="title" class="w-full p-2 border rounded" maxlength="<?php echo MAX_CHAR_TITLE; ?>" required>
             </div>
             <div id="short_novel_section">
                 <label for="content" class="block text-sm font-medium text-gray-900">Content</label>
-                <textarea name="content" id="content" class="w-full p-2 border rounded"></textarea>
+                <textarea name="content" id="content" class="w-full p-2 border rounded" maxlength= <?php echo MAX_CHAR_NOVEL;?>></textarea>
+                <p id="charCount">0 / <?php echo MAX_CHAR_NOVEL;?> characters</p>
             </div>
             <div id="long_novel_section" class="hidden">
                 <label for="pdf" class="block text-sm font-medium text-gray-900">Upload PDF</label>
@@ -143,6 +154,10 @@ document.getElementById('novel_type').addEventListener('change', function() {
         document.getElementById('short_novel_section').classList.add('hidden');
         document.getElementById('long_novel_section').classList.remove('hidden');
     }
+});
+
+document.getElementById("content").addEventListener("input", function() {
+    document.getElementById("charCount").textContent = this.value.length + " / " + <?php echo MAX_CHAR_NOVEL;?>;
 });
 </script>
 

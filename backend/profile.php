@@ -126,7 +126,7 @@ require_once "template/header.php"; ?>
 
             </form>
 
-            <?php if (TRUE){ //($user['role'] === 'admin') { // Check if user is admin ?>
+            <?php if ($user['admin']){ // Check if user is admin ?>
                 <h2 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
                     Admin Panel: Manage Premium Users
                 </h2>

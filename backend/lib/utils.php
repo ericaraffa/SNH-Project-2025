@@ -39,6 +39,11 @@
     define('NOT_FOUND', 404);
     define('INTERNAL_SERVER_ERROR', 500);
 
+    // Max dim pdf
+    define('MAX_SIZE_PDF', 5*1024*1024);
+    define('MAX_CHAR_TITLE', 40);
+    define('MAX_CHAR_NOVEL', 500);
+
     // Exit if the page is requested directly instead of being imported
     function exitIfRequested($callingFile){
         if (strcasecmp(str_replace('\\', '/', $callingFile), $_SERVER['SCRIPT_FILENAME']) == 0) {
