@@ -88,8 +88,6 @@ function handleUpload()
             $novelId = $db->lastInsertId();
             $fileName = basename($novelId);
             $pdfPath = STORAGE . $fileName . ".pdf";
-            # TODO
-            $pdfPath = 'uploads/' . basename($_FILES['pdf']['name']);
         
             # Upload file .pdf
             if (!move_uploaded_file($_FILES['pdf']['tmp_name'], $pdfPath)) {
