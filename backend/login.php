@@ -66,7 +66,7 @@ function loginPost()
         // Too many wrong attempts, block account
         if ($ans[0]['amount'] >= 3) {
 
-            // TODO Change the email service 
+            // TODO Test this
             // Send email to unlock user
             $token = bin2hex(random_bytes(32));
             $DEPLOYED_DOMAIN = getenv('DEPLOYED_DOMAIN');

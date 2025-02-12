@@ -10,7 +10,6 @@ if ($user == null) {
     raiseNotFound();
 }
 
-// TODO Change the part where it gets the book info
 function novelGet()
 {
 
@@ -39,10 +38,11 @@ require_once "template/header.php"; ?>
 <div class="mx-auto my-10 px-3">
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-[10rem] gap-y-10">
         <?php foreach ($ans as &$novel) { ?>
+            <!-- Check of the premium users -->
             <?php if( ($user['premium'] === TRUE) || ($novel['premium'] === $user['premium']) ) { ?>
                 <div class="flex flex-col justify-between w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow g-gray-800 order-gray-700">
                     <div>
-                        <!-- TODO Adjust the way the novels are shown -->
+                        <!-- Novel title -->
                         <h2 class="text-lg font-semibold">
                             <?php echo p($novel['title']); ?>
                         </h2>

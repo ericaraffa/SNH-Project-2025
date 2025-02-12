@@ -1,6 +1,5 @@
 USE snh;
 
-# Add "premium" field
 CREATE TABLE `user`(
     `id` INT NOT NULL AUTO_INCREMENT,
     `email` VARCHAR(200) NOT NULL,
@@ -42,7 +41,7 @@ CREATE TABLE `session`(
     FOREIGN KEY (`user_id`) REFERENCES `user`(`id`)
 ) CHARACTER SET=utf8mb4;
 
-# Change this to "novel" -> (id, title, text (if short), premium)
+# TODO Delete this
 CREATE TABLE `book`(
     `id` INT NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(200) NOT NULL,
