@@ -127,6 +127,49 @@ require_once "template/header.php"; ?>
 
             </form>
 
+            <?php if (TRUE){ //($user['role'] === 'admin') { // Check if user is admin ?>
+                <h2 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
+                    Admin Panel: Manage Premium Users
+                </h2>
+
+                <form action="set_premium.php" method="POST">
+                    <input type="hidden" name="csrf_token" value="<?php echo get_csrf_token(); ?>">
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm text-left text-gray-500 border border-gray-300">
+                            <thead class="bg-gray-100 text-gray-900">
+                                <tr>
+                                    <th class="px-4 py-2">User ID</th>
+                                    <th class="px-4 py-2">Username</th>
+                                    <th class="px-4 py-2 text-center">Premium</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <?php
+                                $db = DB::getInstance();
+                                $users = $db->exec("SELECT * FROM `user`");
+
+                                foreach ($users as $u) {
+                                    $checked = $u['premium'] ? "checked" : ""; ?>
+                                    <tr class='border-b'>
+                                        <td class='px-4 py-2'><?php echo p($u['id']); ?></td>
+                                        <td class='px-4 py-2'><?php echo p($u['username']); ?></td>
+                                        <td class='px-4 py-2 text-center'>
+                                            <input type='checkbox' name='premium_users[]' value='<?php echo p($u['id']); ?>' <?php echo $checked; ?>>
+                                        </td>
+                                    </tr>
+                            <?php } ?>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <button type="submit" class="w-full mt-4 text-white bg-blue-600 hover:bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5">
+                        Update Premium Users
+                    </button>
+                </form>
+            <?php } ?>
+
+
             <!-- TODO The admin has a panel to change the other users privilege -->
         </div>
     </div>
