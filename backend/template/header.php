@@ -33,13 +33,8 @@
                     </button>
                     <div id="mega-menu-full" class="hidden items-center justify-between font-medium w-full md:flex md:w-auto md:order-1">
                         <ul class="flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white g-gray-800 md:g-gray-900 order-gray-700">
-                            <!-- TODO Change these links, some of which can be seen only by logged users-->
                             <li>
                                 <a href="/" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 ext-white md:over:text-blue-500 over:bg-gray-700 over:text-blue-500 md:over:bg-transparent order-gray-700" aria-current="page">Home</a>
-                            </li>
-                            <!-- Upload is here for debugging. Only logged in users can upload or download. -->
-                            <li>
-                                <a href="/upload.php" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 ext-white md:over:text-blue-500 over:bg-gray-700 over:text-blue-500 md:over:bg-transparent order-gray-700">Upload</a>
                             </li>
                             <?php if ($user != null) { ?>
                                 <li>
@@ -47,6 +42,9 @@
                                 </li>
                                 <li>
                                     <a href="/profile.php" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 ext-white md:over:text-blue-500 over:bg-gray-700 over:text-blue-500 md:over:bg-transparent order-gray-700">Profile</a>
+                                </li>
+                                <li>
+                                    <a href="/upload.php" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 ext-white md:over:text-blue-500 over:bg-gray-700 over:text-blue-500 md:over:bg-transparent order-gray-700">Upload</a>
                                 </li>
                                 <li>
                                     <form action="/logout.php" method="POST">

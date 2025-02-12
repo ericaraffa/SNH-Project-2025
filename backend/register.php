@@ -87,8 +87,6 @@ function registerPost()
     die();
 }
 
-// TODO: client side data validation
-
 if (isPost()) {
     $error_msg = registerPost();
 }

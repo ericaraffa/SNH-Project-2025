@@ -13,7 +13,7 @@ if ($user == null) {
 function novelGet()
 {
 
-    // fetch all books
+    // fetch all novels
     $db = DB::getInstance();
     $ans = $db->exec('SELECT * FROM `novel`');
 
@@ -24,7 +24,7 @@ function novelGet()
     return $ans;
 }
 
-// TODO This page will show the novels: change queries to fetch and show novels:
+// This page will show the novels: change queries to fetch and show novels:
 // - short ones are in "text" field and will be printed as is
 // - for the full-length ones, the link to the download must be fetched
 // The non-premium users can read just non-premium novels
