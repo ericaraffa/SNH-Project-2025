@@ -9,6 +9,7 @@ CREATE TABLE `user`(
     `verified` BOOLEAN DEFAULT FALSE,
     `locked` BOOLEAN DEFAULT FALSE,
     `premium` BOOLEAN DEFAULT FALSE,
+    `admin` BOOLEAN DEFAULT FALSE,
 
     PRIMARY KEY (`id`)
 ) CHARACTER SET=utf8mb4;
@@ -110,8 +111,12 @@ CREATE TABLE `user_lock`(
 
 SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci;
 
+# Initialize admin user
 INSERT INTO user VALUES
-    (DEFAULT, 'email', 'username', 'pwd', TRUE, FALSE, TRUE);
+    (DEFAULT, 'admin@admin.com', 'admin', '$2y$10$OWB6J1BR4oO/NXnTJI3k6u15PiyuXUbGxApWuXCBkDVSXk.Ezcm8.', TRUE, FALSE, TRUE, TRUE);
+
+INSERT INTO user VALUES
+    (DEFAULT, 'email', 'debug', '$2y$10$o8aM1dN03jOtCRzgzw2jUOr/AeMmBQEgqkwkqUff.BSNfo8fOR08O', TRUE, FALSE, FALSE, FALSE);
 
 # TODO Change this
 INSERT INTO novel VALUES 
