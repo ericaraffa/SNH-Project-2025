@@ -6,6 +6,11 @@ require_once './lib/DB.php';
 // Check if the user is logged
 $user = getLoggedUser();
 
+// User not authenticated, page not found
+if ($user == null) {
+    raiseNotFound();
+}
+
 // Check if a file is provided
 if (!isset($_GET['novel_id'])) {
     die("Error: No file specified.");
