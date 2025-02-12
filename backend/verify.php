@@ -45,7 +45,6 @@ function verifyGet()
 // Verify account request
 $error_msg = verifyGet();
 
-// TODO Change description
 $description = "At least Poe-try account verification page";
 $title = "Verify account";
 require_once "template/header.php"; ?>

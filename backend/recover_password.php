@@ -31,8 +31,7 @@ function ask_recover_account()
     if (count($ans) === 0) {
         security_log("Attempt of recovering password for non existing user ({$email})");
         return [
-            // TODO DEBUG 
-            "msg" => "FALSO, Check your email for the password recovery link",
+            "msg" => "Check your email for the password recovery link",
         ];
     }
 
@@ -50,8 +49,7 @@ function ask_recover_account()
 
     if(count($ans) > 0) {
         return [
-            // TODO DEBUG
-            "msg" => "PENDING, Check your email for the password recovery link",
+            "msg" => "Check your email for the password recovery link",
         ];
     }
 
@@ -59,7 +57,6 @@ function ask_recover_account()
     $token = bin2hex(random_bytes(32));
     $DEPLOYED_DOMAIN = getenv('DEPLOYED_DOMAIN');
 
-    // TODO Change email service
     // Send code via email
     $ans = send_mail(
         $email,
@@ -85,8 +82,7 @@ function ask_recover_account()
 
     // Return result of the request
     return [
-        // TODO DEBUG
-        "msg" => "GIUSTO, Check your email for the password recovery link",
+        "msg" => "Check your email for the password recovery link",
     ];
 }
 
@@ -176,7 +172,6 @@ function recover_account()
     }
     $user = $ans[0];
 
-    // TODO Change email service
     $ans = send_mail($user['email'], "Password changed", "Your password has been changed successfully. If you didn't do this, please contact us.");
 
     if (!$ans) {
@@ -201,7 +196,6 @@ if (isPost()) {
     $out = (isset($_POST["email"])) ? ask_recover_account() : recover_account();
 }
 
-// TODO Change description
 $description = "At least Poe-try password recover page";
 $title = "Recover account";
 require_once "template/header.php"; ?>

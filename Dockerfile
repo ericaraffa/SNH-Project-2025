@@ -14,11 +14,11 @@ RUN mkdir -p /var/www/html/public
 
 WORKDIR /var/www/html
 
-# Create and set permissions for the ebooks directory
-RUN mkdir -p /var/www/html/ebooks && \
-    chmod -R 777 /var/www/html/ebooks
+# Create and set permissions for the storage directory
+RUN mkdir -p /var/www/html/storage && \
+    chmod -R 777 /var/www/html/storage
 
 RUN composer require sendgrid/sendgrid
 
-COPY ./ebooks ./ebooks
+COPY ./storage ./storage
 COPY ./backend ./public

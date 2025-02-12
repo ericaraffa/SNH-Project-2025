@@ -31,8 +31,7 @@
     header('X-Content-Type-Options: nosniff');    
 
     // This should be created in an offline folder
-    // TODO Modify STORAGE directory
-    define('STORAGE',  '/var/www/html/ebooks/');
+    define('STORAGE',  '/var/www/html/storage/');
     define('OK', 200);
     define('BAD_REQUEST', 400);
     define('UNAUTHORIZED', 401);
@@ -148,7 +147,7 @@
 
     // Redirect the user to the homepage
     function redirect_authenticated(){
-        header("Location: /bookshelf.php");
+        header("Location: /novel.php");
         die();
     }
 
@@ -177,32 +176,6 @@
 
     function checkEmail($email){
         return is_string($email) && filter_var($email, FILTER_VALIDATE_EMAIL);
-    }
-
-    function checkCart($cart){
-        if(!is_array($cart)){
-            return false;
-        }
-
-        if(count($cart) === 0){
-            return false;
-        }
-
-        if(count($cart) > 10){
-            // to avoid DoS
-            return false;
-        }
-
-        foreach($cart as $item){
-            if(!is_array($item) || !isset($item['book_id']) || !isset($item['quantity'])){
-                return false;
-            }
-            if(!is_numeric($item['book_id']) || !is_numeric($item['quantity']) || $item['quantity'] < 1){
-                return false;
-            }
-        }
-
-        return true;
     }
 
     function performPayment($total, $credit_card_number, $credit_card_expiration_date, $credit_card_cvv){

@@ -57,7 +57,6 @@ function profilePost($user)
         ];
     }
 
-    // TODO Change email service
     $ans = send_mail($user['email'], "Password changed", "Your password has been changed successfully. If you didn't do this, please contact us.");
 
     if (!$ans) {

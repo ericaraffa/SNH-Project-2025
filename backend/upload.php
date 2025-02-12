@@ -34,7 +34,7 @@ function handleUpload()
             return "Invalid title or content";
         }
 
-        // TODO Check if premium
+        // Check if premium
         // In "novel" we need a boolean field 'premium'
         $premium = isset($_POST['premium']) ? 1 : 0;
 
