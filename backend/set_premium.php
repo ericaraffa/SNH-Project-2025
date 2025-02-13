@@ -35,5 +35,6 @@ if (isset($_POST['premium_users']) && is_array($_POST['premium_users'])) {
     $db->exec($query);
 }
 
+// TODO Do not return the successful message here
 header("Location: profile.php?msg=Premium users updated successfully");
 exit;
