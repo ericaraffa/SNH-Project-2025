@@ -59,13 +59,38 @@ function handleUpload()
             return "Title is required for the novel.";
         }
 
-        if (!isset($_FILES['pdf']) || $_FILES['pdf']['error'] != UPLOAD_ERR_OK) {
-            return "Error uploading PDF file.";
+        // Check if a file was uploaded
+        if (!isset($_FILES['pdf']) && $_FILES['pdf']['error'] !== UPLOAD_ERR_OK) {
+            return "Please select a valid PDF file";
         }
 
         // Check boundary size
         if ($_FILES['pdf']['size'] > MAX_SIZE_PDF){
-            return "Error PDF file exceeds max dimension.";
+            security_log("Attempt to upload file the exceeds max size permitted.");
+            return "Error PDF file exceeds max size.";
+        }
+
+        $file = $_FILES['pdf'];
+        $fileName = $file['name'];
+        $fileTmpPath = $file['tmp_name'];
+        $fileExtension = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+
+        // Allowed file type
+        $allowedMimeTypes = ['application/pdf'];
+        $allowedExtensions = ['pdf'];
+
+        // Validate file extension
+        if (!in_array($fileExtension, $allowedExtensions)) {
+            return "Invalid file type.";
+        }
+
+        // Validate MIME type
+        $finfo = finfo_open(FILEINFO_MIME_TYPE); // PHP's built-in file info
+        $detectedType = finfo_file($finfo, $fileTmpPath);
+        finfo_close($finfo);
+
+        if (!in_array($detectedType, $allowedMimeTypes)) {
+            return "Invalid file type.";
         }
 
         $title = $_POST['title'];
@@ -144,18 +169,50 @@ require_once "template/header.php";
 </div>
 
 <script>
-document.getElementById('novel_type').addEventListener('change', function() {
-    if (this.value === 'short') {
-        document.getElementById('short_novel_section').classList.remove('hidden');
-        document.getElementById('long_novel_section').classList.add('hidden');
-    } else {
-        document.getElementById('short_novel_section').classList.add('hidden');
-        document.getElementById('long_novel_section').classList.remove('hidden');
-    }
-});
+    // To change the content of the form (short vs full-length novels)
+    document.getElementById('novel_type').addEventListener('change', function() {
+        if (this.value === 'short') {
+            document.getElementById('short_novel_section').classList.remove('hidden');
+            document.getElementById('long_novel_section').classList.add('hidden');
+        } else {
+            document.getElementById('short_novel_section').classList.add('hidden');
+            document.getElementById('long_novel_section').classList.remove('hidden');
+        }
+    });
 
-document.getElementById("content").addEventListener("input", function() {
-    document.getElementById("charCount").textContent = this.value.length + " / " + <?php echo MAX_CHAR_NOVEL;?>;
-});
+    // To update the textarea counter
+    document.getElementById("content").addEventListener("input", function() {
+        document.getElementById("charCount").textContent = this.value.length + " / " + <?php echo MAX_CHAR_NOVEL;?>;
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const novelTypeSelect = document.getElementById("novel_type");
+        const pdfInput = document.getElementById("pdf");
+        const maxFileSize = <?php echo MAX_SIZE_PDF; ?>; // 1 MB
+
+        // Validate the PDF file on form submission
+        pdfInput.addEventListener("change", function (event) {
+            
+            // Only validate if the selected novel type is "long"
+            if (novelTypeSelect.value === "long") {
+                const file = pdfInput.files[0];
+
+                // Check if a file is selected
+                if (!file) {
+                    alert("Please select a PDF file.");
+                    event.preventDefault();
+                    return;
+                }
+
+                // Check if the file size exceeds the limit
+                if (file.size > maxFileSize) {
+                    alert("The file is too large. Maximum size is 1 MB.");
+                    pdfInput.value = ""; // Clear the input field
+                    event.preventDefault();
+                }
+            }
+        });
+    });
+
 </script>
 

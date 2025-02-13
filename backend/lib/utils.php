@@ -40,7 +40,7 @@
     define('INTERNAL_SERVER_ERROR', 500);
 
     // Max dim pdf
-    define('MAX_SIZE_PDF', 5*1024*1024);
+    define('MAX_SIZE_PDF', 1024*1024); # 1MB
     define('MAX_CHAR_TITLE', 40);
     define('MAX_CHAR_NOVEL', 500);
 
