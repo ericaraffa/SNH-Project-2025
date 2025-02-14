@@ -125,7 +125,7 @@ function handleUpload()
     return "Invalid novel type.";
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if (isPost()) {
     $error_msg = handleUpload();
 }
 
@@ -185,6 +185,7 @@ require_once "template/header.php";
         document.getElementById("charCount").textContent = this.value.length + " / " + <?php echo MAX_CHAR_NOVEL;?>;
     });
 
+    // To check the selected file
     document.addEventListener("DOMContentLoaded", function () {
         const novelTypeSelect = document.getElementById("novel_type");
         const pdfInput = document.getElementById("pdf");

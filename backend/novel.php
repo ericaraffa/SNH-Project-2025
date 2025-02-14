@@ -49,7 +49,7 @@ require_once "template/header.php"; ?>
                         <?php if (!empty(p($novel['text']))) { ?>
                             <!-- Scrollable Short Story Container -->
                             <div class="mt-2 text-gray-600 border border-gray-300 p-2 rounded-md bg-gray-50"
-                                style="height: 150px; overflow-y: auto; white-space: pre-wrap;">
+                                style="height: 150px; overflow-y: auto;">
                                 <?php echo p($novel['text']); ?>
                             </div>
                         <?php } else { ?>

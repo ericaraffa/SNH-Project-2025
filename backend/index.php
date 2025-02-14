@@ -12,8 +12,8 @@ require_once "template/header.php"; ?>
         <h1
             class="text-slate-900 font-bold text-4xl sm:text-5xl lg:text-6xl tracking-tight text-center"
         >
-            <code class="text-sky-500 font-mono">At least Poe-try</code> - A Safe Haven
-            for Literature Lovers Everywhere
+            <code class="text-sky-500 font-mono">At least Poe-try</code> - A Safe Place
+            for Literature Enjoyers
         </h1>
     </div>
 
