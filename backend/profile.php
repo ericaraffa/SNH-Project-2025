@@ -38,7 +38,7 @@ function profilePost($user)
             // Create a string of user IDs for the IN clause
             $user_ids = implode(',', $premium_users);
 
-            // Directly construct the query string (Be careful with input sanitization)
+            // Directly construct the query string
             $query = "UPDATE `user` SET `premium` = TRUE WHERE `id` IN ($user_ids)";
 
             // Execute the query
@@ -108,7 +108,6 @@ function profilePost($user)
     ];
 }
 
-// Load this page only through a POST request
 if (isPost()) {
     $out = profilePost($user);
 }
@@ -199,9 +198,6 @@ require_once "template/header.php"; ?>
                     </button>
                 </form>
             <?php } ?>
-
-
-            <!-- TODO The admin has a panel to change the other users privilege -->
         </div>
     </div>
 </div>

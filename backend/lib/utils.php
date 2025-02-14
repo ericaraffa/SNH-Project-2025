@@ -161,25 +161,8 @@
         return true;
     }
 
-    // TODO We can take the following functions as examples to check user inputs
-    function checkCreditCardNumber($number){
-        return is_string($number) && preg_match("/^\d{16}$/", $number);
-    }
-
-    function checkCreditCardExpirationDate($date){
-        return is_string($date) && preg_match("/^\d{2}\/\d{2}$/", $date);
-    }
-
-    function checkCreditCardCVV($cvv){
-        return is_string($cvv) && preg_match("/^\d{3}$/", $cvv);
-    }
-
     function checkEmail($email){
         return is_string($email) && filter_var($email, FILTER_VALIDATE_EMAIL);
-    }
-
-    function performPayment($total, $credit_card_number, $credit_card_expiration_date, $credit_card_cvv){
-        return true;
     }
 
     // Check if the request method is POST
@@ -195,32 +178,6 @@
     // Use this function to print user inputs, avoiding XSS
     function p($string){
         return htmlspecialchars($string, ENT_QUOTES, 'UTF-8');
-    }
-
-    // Check if a string is an integer number
-    function isNumber($str){
-        return is_string($str) && preg_match("/^-?\d{1,}$/", $str);
-    }
-
-    // Common procedure to serve file via HTTP
-    function serveFile($path, $filename){
-        
-        // Open the file and suppress warnings
-        $fp = @fopen($path, 'r');
-
-        // Check if fopen worked
-        if($fp === FALSE){
-            raiseNotFound();
-        }
-
-        // Set content type to serve the file
-        header('Content-Type: application/pdf');
-        header('Content-Disposition: attachment; filename="' . $filename . '"');
-
-        // Send the file content
-        fpassthru($fp);
-        fclose($fp);
-        exit();
     }
 
     // Send email to user

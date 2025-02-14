@@ -9,7 +9,6 @@ if ($user != null) {
 }
 
 // Registration request
-// TODO Register using just the email (NO EXPLICIT USERNAME)
 function registerPost()
 {
     if (!isset($_POST['email']) || !isset($_POST['username']) || !isset($_POST['password']) || !isset($_POST['confirm_password'])) {
