@@ -19,6 +19,37 @@ function profilePost($user)
         ];
     }
 
+    // If it is a POST request for privilege updates
+    if(isset($_POST['submit_premium'])){
+
+        if (!$user['admin']) {
+            die("Unauthorized access.");
+        }
+
+        $db = DB::getInstance();
+
+        // Reset all users to non-premium
+        $db->exec("UPDATE `user` SET `premium` = 0");
+
+        if (isset($_POST['premium_users']) && is_array($_POST['premium_users'])) {
+            // Sanitize the input by ensuring the user IDs are integers
+            $premium_users = array_map('intval', $_POST['premium_users']);
+
+            // Create a string of user IDs for the IN clause
+            $user_ids = implode(',', $premium_users);
+
+            // Directly construct the query string (Be careful with input sanitization)
+            $query = "UPDATE `user` SET `premium` = TRUE WHERE `id` IN ($user_ids)";
+
+            // Execute the query
+            $db->exec($query);
+        }
+
+        return [
+            "msg" => "Privileges updated",
+        ];
+    }
+
     // Check user input
     if (!isset($_POST['current_password']) || !isset($_POST['new_password']) || !isset($_POST['confirm_password'])) {
         return [
@@ -53,7 +84,7 @@ function profilePost($user)
     // Check current password
     if (!password_verify($current_password, $user['password'])) {
         return [
-            "error" => "Wrong password",
+            "error" => "Invalid login details",
         ];
     }
 
@@ -131,9 +162,10 @@ require_once "template/header.php"; ?>
                     Admin Panel: Manage Premium Users
                 </h2>
 
-                <form action="set_premium.php" method="POST">
+                <form action="" method="POST">
                     <input type="hidden" name="csrf_token" value="<?php echo get_csrf_token(); ?>">
-
+                    <input type="hidden" name="submit_premium" value="true">
+                    
                     <div class="overflow-x-auto">
                         <table class="w-full text-sm text-left text-gray-500 border border-gray-300">
                             <thead class="bg-gray-100 text-gray-900">
